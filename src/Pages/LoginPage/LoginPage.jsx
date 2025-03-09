@@ -1,21 +1,49 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import "./LoginPage.css";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
     if (!username || !password) {
-      alert("Please enter both username and password!");
+      toast.error("Please enter both username and password!", { position: "bottom-right" });
       return;
     }
-    
-    toast.success("Login Successful!", { position: "bottom-right" });
+
+    try {
+      const response = await axios.post("http://localhost:8080/api/v1/user/login", {
+        username,
+        password,
+      });
+
+      const { token, role, message } = response.data;
+
+      // Store token and role in local storage
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+
+      toast.success(message, { position: "bottom-right" });
+
+      // Redirect user based on role after a short delay
+      setTimeout(() => {
+        if (role === "admin") {
+          navigate("/admin-dashboard"); // Change this to your admin page
+        } else {
+          navigate("/user-dashboard"); // Change this to your user page
+        }
+      }, 2000);
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Login failed!";
+      toast.error(errorMessage, { position: "bottom-right" });
+    }
   };
 
   return (
@@ -49,8 +77,8 @@ function LoginPage() {
           Don't have an account? <Link to="/SignUpPage">Sign up here</Link>
         </p>
       </form>
-      
-      <ToastContainer /> {/* Add ToastContainer here to display the toast messages */}
+
+      <ToastContainer />
     </div>
   );
 }
