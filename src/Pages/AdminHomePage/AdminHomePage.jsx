@@ -1,8 +1,8 @@
 import React from 'react'
 import SideNav from '../../Components/SideNav/SideNav.jsx'
 
-import './HomePage.css'
-function HomePage() {
+import './AdminHomePage.css'
+function AdminHomePage() {
 
     const cricketers = [
       { id: 1, name: "Virat Kohli", category: "Batsman", status: "Pending" },
@@ -63,4 +63,4 @@ function HomePage() {
   )
 }
 
-export default HomePage
+export default AdminHomePage
