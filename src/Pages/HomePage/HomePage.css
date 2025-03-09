@@ -1,0 +1,122 @@
+/* App container styling */
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+   
+  }
+  
+  /* Content section */
+  .content {
+    flex-grow: 1;
+    margin-left: 250px; /* Sidebar width */
+    padding: 30px;
+    background-color: #f0f0f0; /* Light background */
+    color: #333; /* Text color */
+    max-width: 100%;
+  }
+  
+  .dashboard-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333333;
+  }
+  
+
+  
+  
+  /*------------------------------------teable Section------------------------------ */
+  
+  .action-table {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: scale-up 0.5s ease-in-out;
+  }
+  
+  .action-table:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  .action-table h3 {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #333;
+  }
+  
+  /* Table Styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f0fffc; 
+    border-radius: 8px; 
+  }
+  
+  thead {
+    background-color: #3142b3df; 
+  }
+  
+  th,
+  td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd; 
+  }
+  
+  th {
+    color: white;
+    font-weight: bold;
+  }
+  
+  td {
+    color: #333; 
+  }
+  
+  
+  
+  /* Button styling */
+  .accept-btn,.cancel-btn{
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .accept-btn {
+    background-color: #4CAF50; /* Green for accept */
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .accept-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .cancel-btn {
+    background-color: #f44336; /* Red for cancel */
+    color: white;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #e53935;
+  }
+  
+  
+  /*----------------------animation--------------------------*/
+  @keyframes scale-up {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+  }

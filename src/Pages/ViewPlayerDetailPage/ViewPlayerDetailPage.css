@@ -1,0 +1,80 @@
+/* Center the content */
+.app-container1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ece9e6, #ffffff); /* Soft gradient background */
+  padding: 20px;
+}
+
+/* Content area */
+.content1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styling the card */
+.card1 {
+  background: white;
+  padding: 30px;
+  border-radius: 12px; /* More rounded corners for a modern feel */
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15); /* Softer shadow for depth */
+  text-align: center;
+  width: 100%;
+  max-width: 400px;  /* Limit the card width */
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Add a hover effect to the card */
+.card1:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Title styling */
+.dashboard-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Player details */
+.player-details h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #222;
+}
+
+.player-details p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* Styling the Back link inside the card */
+.back-link {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #007bff;
+  margin-top: 25px;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #007bff;
+}
+
+.back-link:hover {
+  background: #007bff;
+  color: white;
+}
