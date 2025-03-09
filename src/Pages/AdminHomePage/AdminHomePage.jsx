@@ -1,66 +1,85 @@
-import React from 'react'
-import SideNav from '../../Components/SideNav/SideNav.jsx'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import SideNav from '../../Components/SideNav/SideNav.jsx';
 
-import './AdminHomePage.css'
+import './AdminHomePage.css';
+
 function AdminHomePage() {
+  const [players, setPlayers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const cricketers = [
-      { id: 1, name: "Virat Kohli", category: "Batsman", status: "Pending" },
-      { id: 2, name: "Jasprit Bumrah", category: "Bowler", status: "Pending" },
-      { id: 3, name: "MS Dhoni", category: "Wicketkeeper", status: "Pending" },
-      ];
-    
-      const handleAccept = (id) => {
-        confirm(`cricketer for ${id} accepted.`);
-        // Add functionality to update status in your database
-      };
-    
-      const handleCancel = (id) => {
-        confirm(`cricketer for ${id} canceled.`);
-        // Add functionality to update status in your database
-      };
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // Get the JWT token from localStorage
+
+    axios
+      .get("http://localhost:8080/api/v1/players/get", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach JWT token in Authorization header
+        },
+      })
+      .then((response) => {
+        setPlayers(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching players:", error);
+        setError("Failed to load players");
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <>
-        <div className="app-container">
+      <div className="app-container">
         <SideNav />
         <div className="content">
-         <div>
-          <h1 className="dashboard-title">Welcome to  Admin Panel </h1>
-          <p className="dashboard-description">Manage your Players </p>
+          <h1 className="dashboard-title">Welcome to Admin Panel</h1>
+          <p className="dashboard-description">Manage your Players</p>
 
           <div className="action-table">
-            <h3>Latest Registering cricketers</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Crickater Name</th>
-                  <th>Category</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cricketers.map((cricketer) => (
-                  <tr key={cricketer.id}>
-                    <td>{cricketer.name}</td>
-                    <td>{cricketer.category}</td>
-                    <td>{cricketer.status}</td>
-                    <td>
-                      <button className="accept-btn" onClick={() => handleAccept(cricketer.id)}>Accept</button>
-                      <button className="cancel-btn" onClick={() => handleCancel(cricketer.id)}>Cancel</button>
-                      
-                    </td>
+            <h3>Latest Registering Players</h3>
+            {loading ? (
+              <p>Loading players...</p>
+            ) : error ? (
+              <p className="error">{error}</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Player Name</th>
+                    <th>University</th>
+                    <th>Category</th>
+                    <th>Total Runs</th>
+                    <th>Balls Faced</th>
+                    <th>Innings Played</th>
+                    <th>Wickets</th>
+                    <th>Overs Bowled</th>
+                    <th>Runs Conceded</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {players.map((player, index) => (
+                    <tr key={index}>
+                      <td>{player.name}</td>
+                      <td>{player.university}</td>
+                      <td>{player.category}</td>
+                      <td>{player.totalRuns}</td>
+                      <td>{player.ballsFaced}</td>
+                      <td>{player.inningsPlayed}</td>
+                      <td>{player.wickets}</td>
+                      <td>{player.oversBowled}</td>
+                      <td>{player.runsConceded}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
-        </div>
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default AdminHomePage
+export default AdminHomePage;
