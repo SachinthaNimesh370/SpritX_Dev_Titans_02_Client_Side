@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-
 import "./SignUpPage.css";
 
 function SignUpPage() {
@@ -55,7 +55,7 @@ function SignUpPage() {
     setRole(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {
       username: validateUsername(username),
@@ -66,11 +66,22 @@ function SignUpPage() {
     setErrors(newErrors);
 
     if (!newErrors.username && !newErrors.password && !newErrors.confirmPassword && !newErrors.role) {
-      toast.success("Signup successful!", { position: "bottom-right" });
-      
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
+      try {
+        const response = await axios.post("http://localhost:8080/api/v1/user/register", {
+          username,
+          password,
+          role,
+        });
+
+        toast.success(response.data.message, { position: "bottom-right" });
+
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || "Signup failed!";
+        toast.error(errorMessage, { position: "bottom-right" });
+      }
     }
   };
 
@@ -89,8 +100,8 @@ function SignUpPage() {
           <label className="signup-label">User Role</label>
           <select className={`signup-input ${errors.role ? "input-error" : role ? "input-success" : ""}`} value={role} onChange={handleRoleChange}>
             <option value="">Select Role</option>
-            <option value="User">User</option>
-            <option value="Admin">Admin</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
           </select>
           {errors.role && <p className="signup-error">{errors.role}</p>}
         </div>
