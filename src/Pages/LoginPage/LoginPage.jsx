@@ -36,8 +36,10 @@ function LoginPage() {
       setTimeout(() => {
         if (role === "admin") {
           navigate("/admin-dashboard"); // Change this to your admin page
+          console.log(role);
         } else {
           navigate("/user-dashboard"); // Change this to your user page
+          console.log(role);
         }
       }, 2000);
     } catch (error) {
